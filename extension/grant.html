@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ridealong — allow access</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Allow access to <span id="host">?</span>?</h1>
+    <p>
+      A local tool using the ridealong bridge wants to read <strong id="origin">?</strong> through your
+      signed-in session in this browser. Once allowed, later requests to this host run without asking.
+    </p>
+    <p class="callout warn">
+      Only allow it if you just ran <code>ridealong</code> or a tool that uses it, for this host. If you
+      didn't, click Deny.
+    </p>
+
+    <div class="actions">
+      <button id="allow" class="primary">Allow</button>
+      <button id="deny" type="button">Deny</button>
+    </div>
+    <p id="status"></p>
+
+    <script type="module" src="grant.js"></script>
+  </body>
+</html>

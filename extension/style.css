@@ -1,0 +1,248 @@
+/* GENERATED FROM tokens.json — DO NOT EDIT (personal design system: grayscale + one accent) */
+:root {
+  color-scheme: light dark;
+  --color-background: #ffffff;
+  --color-on-background: #0a0a0a;
+  --color-surface: #ffffff;
+  --color-surface-container: #fafafa;
+  --color-surface-variant: #f5f5f5;
+  --color-on-surface: #0a0a0a;
+  --color-on-surface-variant: #525252;
+  --color-on-surface-disabled: #a3a3a3;
+  --color-outline: #d4d4d4;
+  --color-outline-variant: #e5e5e5;
+  --color-accent: #0a0a0a;
+  --color-on-accent: #ffffff;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-error: #dc2626;
+  --color-info: #2563eb;
+  --font-sans: "Noto Sans", system-ui, sans-serif;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #000000;
+    --color-on-background: #fafafa;
+    --color-surface: #0a0a0a;
+    --color-surface-container: #171717;
+    --color-surface-variant: #262626;
+    --color-on-surface: #fafafa;
+    --color-on-surface-variant: #a3a3a3;
+    --color-on-surface-disabled: #525252;
+    --color-outline: #404040;
+    --color-outline-variant: #262626;
+    --color-accent: #fafafa;
+    --color-on-accent: #000000;
+    --color-success: #4ade80;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+    --color-info: #60a5fa;
+  }
+}
+
+/* bodyLarge */
+body {
+  max-width: 36rem;
+  margin: var(--space-8) auto;
+  padding: 0 var(--space-4);
+  background: var(--color-background);
+  color: var(--color-on-background);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+
+/* headlineSmall */
+h1 {
+  margin: 0 0 var(--space-4);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.33;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0 0 var(--space-3);
+}
+
+code {
+  padding: 0 var(--space-1);
+  border-radius: 4px;
+  background: var(--color-surface-variant);
+  font-size: 0.9em;
+  letter-spacing: 0;
+}
+
+/* titleSmall */
+label {
+  display: block;
+  margin: var(--space-6) 0 var(--space-1);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: 0.1px;
+}
+
+/* Field boundaries must be perceivable (3:1), so they use onSurfaceVariant, not the decorative outline. */
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-on-surface-variant);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  font: inherit;
+  letter-spacing: 0.25px;
+}
+
+textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* bodySmall */
+.hint {
+  margin: var(--space-1) 0 0;
+  color: var(--color-on-surface-variant);
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: 0.4px;
+}
+
+details {
+  margin-top: var(--space-6);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-outline-variant);
+}
+
+summary {
+  cursor: pointer;
+  color: var(--color-on-surface-variant);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+/* labelLarge */
+button {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-on-surface-variant);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-on-surface);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: 0.1px;
+  cursor: pointer;
+}
+
+button.primary {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+button:disabled {
+  border-color: var(--color-outline);
+  background: transparent;
+  color: var(--color-on-surface-disabled);
+  cursor: default;
+}
+
+/* Status colors signal state through the bar; the text stays onSurface so it always reads. */
+.callout,
+#status:not(:empty) {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--color-outline);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-container);
+  color: var(--color-on-surface);
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: 0.25px;
+}
+
+.callout.warn {
+  border-left-color: var(--color-warning);
+}
+
+#status.ok {
+  border-left-color: var(--color-success);
+}
+
+#status.err {
+  border-left-color: var(--color-error);
+}
+
+/* titleMedium */
+h2 {
+  margin: var(--space-6) 0 var(--space-1);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.15px;
+}
+
+.hosts {
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hosts li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.hosts li.hint {
+  border-bottom: none;
+}
+
+.state:empty {
+  display: none;
+}
+
+.state {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: 9999px;
+  background: var(--color-surface-variant);
+  color: var(--color-on-surface-variant);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}

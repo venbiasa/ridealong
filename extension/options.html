@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ridealong — settings</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>ridealong</h1>
+    <p>
+      Lets a local tool read a browser-gated service through your own signed-in session. To pair, start
+      the bridge (<code>ridealong serve</code>): it opens a page here and you click Pair.
+    </p>
+    <span id="pairState" class="state"></span>
+
+    <h2>Allowed hosts</h2>
+    <p class="hint">A host is added when you click Allow on the page that opens the first time a request goes to it.</p>
+    <ul id="hosts" class="hosts"></ul>
+
+    <details>
+      <summary>Advanced</summary>
+      <label for="port">Bridge port</label>
+      <input id="port" type="text" inputmode="numeric" placeholder="8731" autocomplete="off" />
+      <p class="hint">Only if you started the bridge with <code>--port</code>. It always listens on 127.0.0.1.</p>
+    </details>
+
+    <div class="actions">
+      <button id="save" class="primary">Save port</button>
+      <button id="test" type="button">Test connection</button>
+      <button id="unpair" type="button">Unpair</button>
+    </div>
+    <p id="status"></p>
+
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

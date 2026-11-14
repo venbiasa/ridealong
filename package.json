@@ -1,0 +1,13 @@
+{
+  "name": "ridealong",
+  "version": "0.1.0",
+  "description": "Read browser-gated services (IAP, SSO, ZTNA) through your own signed-in browser session. No credentials leave the browser.",
+  "type": "module",
+  "bin": { "ridealong": "src/cli.mjs" },
+  "files": ["src", "extension", "PROTOCOL.md", "README.md", "LICENSE"],
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ridealong — pair</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Pair with the ridealong bridge</h1>
+    <p>
+      A bridge on <strong>127.0.0.1 port <span id="port">?</span></strong> asked to use this browser's
+      signed-in sessions. Each host still needs your Allow the first time a request goes to it. The
+      pairing is remembered until you unpair or the bridge restarts.
+    </p>
+    <p class="callout warn">
+      Only pair if you just started <code>ridealong</code> or a tool that uses it on this machine. If you
+      didn't, close this tab.
+    </p>
+
+    <div class="actions">
+      <button id="pair" class="primary">Pair</button>
+    </div>
+    <p id="status"></p>
+
+    <script type="module" src="pair.js"></script>
+  </body>
+</html>
