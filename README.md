@@ -26,8 +26,10 @@ The bridge never sees the service's cookies or credentials — only the response
   knowledge of any particular service.
 - **A bridge server + CLI** (`src/`, command `ridealong`) — dependency-free Node, so any tool can
   drive it, and you can use it on its own.
-- **[`PROTOCOL.md`](PROTOCOL.md)** — the tiny local protocol, so other tools can implement the server
-  side (butlerbridge, for example, speaks it to read IAP-gated Jenkins).
+- **A library** (`import { startBridge } from "ridealong"`, typed) — the same bridge for your own
+  tool, so it never re-implements the protocol. butlerbridge uses it to read IAP-gated Jenkins.
+- **[`PROTOCOL.md`](PROTOCOL.md)** — the tiny local protocol, for anyone who has to speak it from
+  another language.
 
 ## Setup
 
@@ -97,6 +99,25 @@ Or let another tool drive the bridge over [the protocol](PROTOCOL.md).
 - **It respects the gateway.** ridealong does not extract cookies, bypass the gateway, or weaken it —
   it rides the session the gateway already granted you. It changes nothing on the gateway and needs no
   administrator action. It cannot grant access you don't already have in the browser.
+
+## Use it as a library
+
+```js
+import { openInBrowser, startBridge } from "ridealong";
+
+const bridge = await startBridge({
+  token: storedToken, // keep one somewhere safe so a paired extension stays paired across runs
+  onPairingUrl: (url) => openInBrowser(url),
+});
+const res = await bridge.request({ url: "https://service.example.com/api/thing" });
+console.log(res.status, res.body.toString());
+await bridge.close();
+```
+
+`request` resolves with `{ status, statusText, headers, body }` (`body` is a `Buffer`), `visit` opens a
+page in a background tab to renew an app's own login, `pair()` re-opens the pairing page, and
+`connected()` says whether a paired extension has polled yet. Types ship in `src/server.d.mts`.
+Until ridealong is published, depend on a local checkout: `"ridealong": "file:../ridealong"`.
 
 ## Develop
 

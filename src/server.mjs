@@ -1,4 +1,5 @@
 import { createCipheriv, createECDH, createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { spawn } from "node:child_process";
 import { createServer } from "node:http";
 
 export const DEFAULT_PORT = 8731;
@@ -22,6 +23,23 @@ const PAIR_PAGE = `<!doctype html>
 <p>If nothing happens, this browser doesn't have the extension. Copy this page's full address,
 including everything after <code>#</code>, into the browser where ridealong is installed.</p>
 </body>`;
+
+/** Opens a URL in the default browser; failures are silent, so callers should also print it. */
+export function openInBrowser(url) {
+  const [cmd, args] =
+    process.platform === "darwin"
+      ? ["open", [url]]
+      : process.platform === "win32"
+        ? ["cmd", ["/c", "start", "", url]]
+        : ["xdg-open", [url]];
+  try {
+    const child = spawn(cmd, args, { stdio: "ignore", detached: true });
+    child.on("error", () => {});
+    child.unref();
+  } catch {
+    // The caller's printed link is the fallback.
+  }
+}
 
 const sha256Hex = (buf) => createHash("sha256").update(buf).digest("hex");
 const hmacHex = (key, msg) => createHmac("sha256", key).update(msg).digest("hex");
@@ -94,7 +112,7 @@ function abortError() {
  *
  * @param {{ port?: number, token?: string, pollTimeoutMs?: number,
  *   onPairingUrl?: (url: string) => void, onPaired?: () => void }} [opts]
- * @returns {Promise<{ request: Function, visit: Function, port: number, token: string, close: Function, pair: Function }>}
+ * @returns {Promise<Bridge>} (see server.d.mts)
  */
 export async function startBridge(opts = {}) {
   const token = opts.token ?? randomBytes(32).toString("base64url");
@@ -103,6 +121,7 @@ export async function startBridge(opts = {}) {
   const waiters = [];
   const pending = new Map();
   const seenNonces = new Map();
+  let connected = false;
   let port = 0;
   let pairing = null;
 
@@ -278,6 +297,7 @@ export async function startBridge(opts = {}) {
       return;
     }
     if (req.method === "GET" && path === "/poll") {
+      connected = true;
       const next = queue.shift();
       if (next) {
         send(res, nonce, 200, JSON.stringify(next), "application/json");
@@ -388,5 +408,5 @@ export async function startBridge(opts = {}) {
 
   const address = server.address();
   port = typeof address === "object" && address ? address.port : (opts.port ?? DEFAULT_PORT);
-  return { request, visit, port, token, close, pair };
+  return { request, visit, port, token, close, pair, connected: () => connected };
 }

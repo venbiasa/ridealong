@@ -1,7 +1,6 @@
 #!/usr/bin/env node
-import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
-import { startBridge, DEFAULT_PORT } from "./server.mjs";
+import { DEFAULT_PORT, openInBrowser, startBridge } from "./server.mjs";
 
 const HELP = `ridealong — read browser-gated services (IAP, SSO, ZTNA) through your signed-in browser
 
@@ -25,22 +24,6 @@ bridge restarts (handy for repeated 'get' calls).`;
 function flag(argv, name, fallback) {
   const i = argv.indexOf(`--${name}`);
   return i >= 0 && argv[i + 1] !== undefined ? argv[i + 1] : fallback;
-}
-
-function openInBrowser(url) {
-  const [cmd, args] =
-    process.platform === "darwin"
-      ? ["open", [url]]
-      : process.platform === "win32"
-        ? ["cmd", ["/c", "start", "", url]]
-        : ["xdg-open", [url]];
-  try {
-    const child = spawn(cmd, args, { stdio: "ignore", detached: true });
-    child.on("error", () => {});
-    child.unref();
-  } catch {
-    // The printed link is the fallback.
-  }
 }
 
 function pairingHooks(rest) {

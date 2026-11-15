@@ -305,8 +305,35 @@ describe("click-to-pair", () => {
     assert.equal(urls.length, 0);
   });
 
+  test("the pairing page itself carries neither the secret nor the token", async () => {
+    const { b, urls } = await pairable();
+    b.pair();
+    const page = await (await fetch(`http://127.0.0.1:${b.port}/pair`)).text();
+    assert.ok(!page.includes(secretOf(urls[0])));
+    assert.ok(!page.includes(b.token));
+  });
+
   test("no pairing key is offered until pairing starts", async () => {
     const { b } = await pairable();
     assert.equal((await fetch(`http://127.0.0.1:${b.port}/pair/key`)).status, 404);
   });
+});
+
+test("connected() turns true once an extension holding the token polls", async () => {
+  const b = await make(20);
+  assert.equal(b.connected(), false);
+  await call(b, "GET", "/health");
+  assert.equal(b.connected(), false);
+  await call(b, "GET", "/poll", null, "wrong-token");
+  assert.equal(b.connected(), false);
+  await call(b, "GET", "/poll");
+  assert.equal(b.connected(), true);
+});
+
+test("the package entry point is the bridge library", async () => {
+  const lib = await import("ridealong");
+  for (const name of ["startBridge", "signRequest", "verifyResponse", "pairingKey", "openInBrowser"]) {
+    assert.equal(typeof lib[name], "function", name);
+  }
+  assert.equal(lib.DEFAULT_PORT, 8731);
 });
