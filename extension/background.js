@@ -335,6 +335,7 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 chrome.storage.session.onChanged.addListener(() => void loop());
 chrome.storage.local.onChanged.addListener(() => void loop());
-chrome.alarms.create("ridealong-keepalive", { periodInMinutes: 1 });
+// 30 s is Chrome's minimum; it bounds how long a newly started bridge waits to be found.
+chrome.alarms.create("ridealong-keepalive", { periodInMinutes: 0.5 });
 chrome.alarms.onAlarm.addListener(() => void loop());
 void loop();
