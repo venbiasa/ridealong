@@ -224,11 +224,11 @@ h2 {
   justify-content: space-between;
   gap: var(--space-2);
   padding: var(--space-2) 0;
-  border-bottom: 1px solid var(--color-outline-variant);
 }
 
-.hosts li.hint {
-  border-bottom: none;
+/* Lines only between rows: the Advanced section below draws its own top border. */
+.hosts li + li {
+  border-top: 1px solid var(--color-outline-variant);
 }
 
 .state:empty {
